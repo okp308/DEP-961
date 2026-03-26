@@ -7,35 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --cream: #E8DFF0;
-    --blush: #4A2D5A;
     --coral: #FF8C6B;
-    --plum: #1A0D1E;
-    --gold: #D4A847;
-    --mint: #2A4A3A;
-    --lilac: #3D2850;
     --text: #EDE0F5;
     --muted: #A88FBB;
     --card-bg: #231430;
     --input-bg: #2D1A3A;
     --border: #4A2D5A;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #120A18;
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Confetti dots bg */
+  body { font-family: 'DM Sans', sans-serif; background: #120A18; color: var(--text); min-height: 100vh; overflow-x: hidden; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
+    content: ''; position: fixed; inset: 0;
     background-image:
       radial-gradient(circle, #6B3FA0 2px, transparent 2px),
       radial-gradient(circle, #2A5C45 2px, transparent 2px),
@@ -43,565 +25,209 @@
       radial-gradient(circle, #8B6520 1.5px, transparent 1.5px);
     background-size: 120px 120px, 90px 90px, 150px 150px, 70px 70px;
     background-position: 0 0, 45px 45px, 20px 80px, 60px 10px;
-    opacity: 0.25;
-    pointer-events: none;
-    z-index: 0;
+    opacity: 0.25; pointer-events: none; z-index: 0;
   }
-
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 4rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── HEADER ── */
-  .header {
-    text-align: center;
-    padding: 3rem 0 2rem;
-  }
-
-  .header .tag {
-    display: inline-block;
-    background: var(--coral);
-    color: #1A0D1E;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 5px 16px;
-    border-radius: 99px;
-    margin-bottom: 1.25rem;
-  }
-
-  .header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 8vw, 3.5rem);
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-
-  .header h1 em {
-    font-style: italic;
-    color: var(--coral);
-  }
-
-  .header .subhead {
-    font-size: 17px;
-    color: var(--text);
-    max-width: 380px;
-    margin: 0.75rem auto 0;
-    line-height: 1.75;
-    font-weight: 500;
-  }
-
-  .squiggle {
-    width: 60px;
-    margin: 1.5rem auto;
-    display: block;
-  }
-
-  /* ── DETAILS STRIP ── */
-  .details {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    border: 1.5px solid var(--border);
-  }
-
-  .detail-cell {
-    background: var(--card-bg);
-    padding: 1rem 1.25rem;
-    text-align: center;
-  }
-
-  .detail-cell .emoji { font-size: 18px; display: block; margin-bottom: 4px; }
-  .detail-cell .lbl { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
-  .detail-cell .val { font-size: 14px; font-weight: 500; color: var(--text); }
-
-  /* ── TABS ── */
-  .tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 1.5rem;
-    background: rgba(255,255,255,0.05);
-    border-radius: 12px;
-    padding: 4px;
-  }
-
-  .tab-btn {
-    flex: 1;
-    padding: 9px;
-    border: none;
-    border-radius: 9px;
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-
-  .tab-btn.active {
-    background: var(--coral);
-    color: #1A0D1E;
-  }
-
-  /* ── CARD ── */
-  .card {
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 1.75rem;
-    border: 1.5px solid var(--border);
-    margin-bottom: 1rem;
-  }
-
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--text);
-    margin-bottom: 1.25rem;
-  }
-
-  /* ── FORM ── */
-  .field { margin-bottom: 1rem; }
-  .field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
-
-  .field input, .field select {
-    width: 100%;
-    padding: 11px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    background: var(--input-bg);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .field input:focus, .field select:focus { border-color: var(--coral); }
-
-  .rsvp-toggle {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .rsvp-choice {
-    padding: 11px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    background: var(--input-bg);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
-  }
-
-  .rsvp-choice.yes-active { border-color: #1D9E75; background: #0D2E22; color: #5CD4A0; }
-  .rsvp-choice.no-active  { border-color: var(--coral); background: #3A1810; color: #FF8C6B; }
-
-  .submit-btn {
-    width: 100%;
-    padding: 13px;
-    background: var(--coral);
-    color: #1A0D1E;
-    border: none;
-    border-radius: 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: opacity 0.15s, transform 0.1s;
-    letter-spacing: 0.02em;
-  }
-
-  .submit-btn:hover { opacity: 0.88; }
-  .submit-btn:active { transform: scale(0.98); }
-
-  .success-box {
-    text-align: center;
-    padding: 2rem 1rem;
-    display: none;
-  }
-
-  .success-box .big-emoji { font-size: 40px; margin-bottom: 0.75rem; }
-  .success-box h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--text); margin-bottom: 0.4rem; }
-  .success-box p { font-size: 14px; color: var(--muted); }
-
-  /* ── GUEST LIST ── */
-  .counts {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 1.25rem;
-  }
-
-  .count-chip {
-    flex: 1;
-    text-align: center;
-    padding: 10px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-
-  .count-chip .n { font-size: 22px; font-weight: 700; display: block; line-height: 1.1; }
-  .chip-yes { background: #0D2E22; color: #5CD4A0; }
-  .chip-no  { background: #3A1810; color: #FF8C6B; }
-  .chip-wait { background: #2A2010; color: #D4A847; }
-
-  .guest-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px dashed var(--border);
-  }
-
-  .guest-item:last-child { border-bottom: none; }
-
-  .guest-avatar {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    background: #3D2850;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 600;
-    color: var(--coral);
-    flex-shrink: 0;
-    text-transform: uppercase;
-  }
-
-  .guest-info { flex: 1; }
-  .guest-name { font-size: 14px; font-weight: 500; color: var(--text); }
-  .guest-meta { font-size: 12px; color: var(--muted); margin-top: 1px; }
-
-  .status-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 99px;
-    white-space: nowrap;
-  }
-
-  .badge-confirmed { background: #0D2E22; color: #5CD4A0; }
-  .badge-pending   { background: #2A2010; color: #D4A847; }
-  .badge-declined  { background: #3A1810; color: #FF8C6B; }
-
-  .empty-state {
-    text-align: center;
-    padding: 2rem 0;
-    color: var(--muted);
-    font-size: 14px;
-  }
-
-  .empty-state .e { font-size: 28px; margin-bottom: 8px; }
-
-  /* ── ADMIN PANEL ── */
-  .admin-login { margin-top: 2rem; }
-
-  .admin-toggle {
-    background: none;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    display: block;
-    margin: 0 auto;
-    padding: 4px;
-  }
-
-  .admin-panel { display: none; }
-  .admin-panel.open { display: block; }
-
-  .admin-form {
-    display: flex;
-    gap: 8px;
-    margin-top: 0.75rem;
-  }
-
-  .admin-form input {
-    flex: 1;
-    padding: 9px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    background: var(--input-bg);
-    color: var(--text);
-    outline: none;
-  }
-
-  .admin-form input:focus { border-color: var(--coral); }
-
-  .admin-form button {
-    padding: 9px 16px;
-    background: var(--coral);
-    color: #1A0D1E;
-    border: none;
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  .admin-err {
-    font-size: 12px;
-    color: var(--coral);
-    margin-top: 6px;
-    text-align: center;
-    display: none;
-  }
-
-  .admin-view { display: none; }
-  .admin-view.open { display: block; }
-
-  .admin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-
-  .admin-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: var(--text);
-  }
-
-  .logout-btn {
-    background: none;
-    border: 1px solid var(--border);
-    padding: 5px 12px;
-    border-radius: 99px;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .pending-item {
-    background: #2A1D10;
-    border: 1px solid #4A3510;
-    border-radius: 12px;
-    padding: 12px 14px;
-    margin-bottom: 8px;
-  }
-
-  .pending-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
-  .pending-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-
-  .action-btns { display: flex; gap: 8px; }
-
-  .approve-btn, .decline-btn {
-    flex: 1;
-    padding: 8px;
-    border-radius: 8px;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-
-  .approve-btn { background: #E1F5EE; color: #0F6E56; }
-  .decline-btn { background: #FAECE7; color: #993C1D; }
-  .approve-btn:hover, .decline-btn:hover { opacity: 0.75; }
-
-  .no-pending { font-size: 13px; color: var(--muted); text-align: center; padding: 1rem 0; }
-
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2.5rem;
-    opacity: 0.6;
-  }
-
-  /* ── PHOTOS ── */
-  .hero-bg {
-    width: 100%;
-    height: 340px;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 10px;
-    position: relative;
-  }
-  .hero-bg img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    display: block;
-  }
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.28) 100%);
-    border-radius: 20px;
-  }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 1.5rem;
-  }
-  .gallery-cell {
-    aspect-ratio: 1;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .gallery-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  @keyframes popIn {
-    from { transform: scale(0.92); opacity: 0; }
-    to   { transform: scale(1);    opacity: 1; }
-  }
-
-  .card { animation: popIn 0.3s ease; }
-
-  /* ── MOBILE ── */
-  @media (max-width: 480px) {
-    .container { padding: 1rem 1rem 3rem; }
-
-    .header { padding: 2rem 0 1.5rem; }
-    .header .subhead { font-size: 14px; max-width: 100%; }
-
-    /* Prevent iOS auto-zoom on input focus — must be 16px+ */
-    .field input, .field select, .admin-form input {
-      font-size: 16px;
-    }
-
-    /* Bigger tap targets for buttons */
-    .rsvp-choice { padding: 14px 10px; font-size: 14px; }
-    .submit-btn  { padding: 15px; font-size: 16px; }
-    .tab-btn     { padding: 11px 6px; font-size: 13px; }
-    .approve-btn, .decline-btn { padding: 11px; font-size: 14px; }
-
-    /* Hero slightly shorter on small screens */
-    .hero-bg { height: 240px; }
-
-    /* 2-col gallery on very narrow phones */
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-
-    /* Details card — stack location full-width, keep others 2-col */
-    .card { padding: 1.25rem; }
-
-    /* Admin form stacks vertically */
-    .admin-form { flex-direction: column; }
-    .admin-form button { width: 100%; padding: 11px; }
-
-    /* Count chips smaller label */
-    .count-chip { font-size: 11px; padding: 8px 4px; }
-    .count-chip .n { font-size: 18px; }
+  .container { max-width: 600px; margin: 0 auto; padding: 2rem 1.25rem 4rem; position: relative; z-index: 1; }
+
+  /* HEADER */
+  .header { text-align: center; padding: 3rem 0 2rem; }
+  .header .tag { display:inline-block; background:var(--coral); color:#1A0D1E; font-size:11px; font-weight:500; letter-spacing:0.15em; text-transform:uppercase; padding:5px 16px; border-radius:99px; margin-bottom:1.25rem; }
+  .header h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,8vw,3.5rem); line-height:1.1; color:var(--text); margin-bottom:0.5rem; }
+  .header h1 em { font-style:italic; color:var(--coral); }
+  .header .subhead { font-size:17px; color:var(--text); max-width:380px; margin:0.75rem auto 0; line-height:1.75; font-weight:500; }
+  .squiggle { width:60px; margin:1.5rem auto; display:block; }
+
+  /* HERO */
+  .hero-bg { width:100%; height:340px; border-radius:20px; overflow:hidden; margin-bottom:10px; position:relative; }
+  .hero-bg img { width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; }
+  .hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,rgba(0,0,0,0.08),rgba(0,0,0,0.28)); border-radius:20px; }
+
+  /* CAROUSEL */
+  .carousel-wrap { position:relative; margin-bottom:1.5rem; overflow:hidden; border-radius:14px; cursor:grab; user-select:none; -webkit-user-select:none; }
+  .carousel-wrap:active { cursor:grabbing; }
+  .carousel-track { display:flex; gap:8px; will-change:transform; }
+  .carousel-item { flex:0 0 calc(33.333% - 6px); aspect-ratio:1; border-radius:10px; overflow:hidden; }
+  .carousel-item img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+
+  /* DETAILS */
+  .details { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border-radius:16px; overflow:hidden; margin-bottom:2rem; border:1.5px solid var(--border); }
+  .detail-cell { background:var(--card-bg); padding:1rem 1.25rem; text-align:center; }
+  .detail-cell .emoji { font-size:18px; display:block; margin-bottom:4px; }
+  .detail-cell .lbl { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+  .detail-cell .val { font-size:14px; font-weight:500; color:var(--text); }
+
+  /* TABS */
+  .tabs { display:flex; gap:6px; margin-bottom:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px; padding:4px; }
+  .tab-btn { flex:1; padding:9px; border:none; border-radius:9px; background:transparent; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.18s; }
+  .tab-btn.active { background:var(--coral); color:#1A0D1E; }
+
+  /* CARD */
+  .card { background:var(--card-bg); border-radius:20px; padding:1.75rem; border:1.5px solid var(--border); margin-bottom:1rem; animation:popIn 0.3s ease; }
+  .card-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); margin-bottom:1.25rem; }
+
+  /* FORM */
+  .field { margin-bottom:1rem; }
+  .field label { display:block; font-size:12px; font-weight:500; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px; }
+  .field input, .field select { width:100%; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); color:var(--text); outline:none; transition:border-color 0.15s; }
+  .field input:focus, .field select:focus { border-color:var(--coral); }
+  .rsvp-toggle { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .rsvp-choice { padding:11px; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; color:var(--muted); cursor:pointer; text-align:center; transition:all 0.15s; }
+  .rsvp-choice.yes-active   { border-color:#1D9E75; background:#0D2E22; color:#5CD4A0; }
+  .rsvp-choice.maybe-active { border-color:#D4A847; background:#2A2010; color:#D4A847; }
+  .rsvp-choice.no-active    { border-color:var(--coral); background:#3A1810; color:#FF8C6B; }
+  .submit-btn { width:100%; padding:13px; background:var(--coral); color:#1A0D1E; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer; margin-top:0.5rem; transition:opacity 0.15s,transform 0.1s; }
+  .submit-btn:hover { opacity:0.88; }
+  .submit-btn:active { transform:scale(0.98); }
+  .success-box { text-align:center; padding:2rem 1rem; display:none; }
+  .success-box .big-emoji { font-size:40px; margin-bottom:0.75rem; }
+  .success-box h3 { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--text); margin-bottom:0.4rem; }
+  .success-box p { font-size:14px; color:var(--muted); }
+
+  /* GUEST LIST */
+  .counts { display:flex; gap:8px; margin-bottom:1.25rem; }
+  .count-chip { flex:1; text-align:center; padding:10px 8px; border-radius:10px; font-size:12px; font-weight:500; }
+  .count-chip .n { font-size:22px; font-weight:700; display:block; line-height:1.1; }
+  .chip-yes   { background:#0D2E22; color:#5CD4A0; }
+  .chip-maybe { background:#2A2010; color:#D4A847; }
+  .chip-wait  { background:#1A1030; color:#A88FBB; }
+  .chip-no    { background:#3A1810; color:#FF8C6B; }
+  .guest-item { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px dashed var(--border); }
+  .guest-item:last-child { border-bottom:none; }
+  .guest-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:var(--coral); flex-shrink:0; text-transform:uppercase; }
+  .guest-info { flex:1; }
+  .guest-name { font-size:14px; font-weight:500; color:var(--text); }
+  .guest-meta { font-size:12px; color:var(--muted); margin-top:1px; }
+  .status-badge { font-size:11px; font-weight:600; padding:3px 10px; border-radius:99px; white-space:nowrap; }
+  .badge-confirmed { background:#0D2E22; color:#5CD4A0; }
+  .badge-maybe     { background:#2A2010; color:#D4A847; }
+  .empty-state { text-align:center; padding:2rem 0; color:var(--muted); font-size:14px; }
+  .empty-state .e { font-size:28px; margin-bottom:8px; }
+
+  /* STATUS TAB */
+  .status-input-row { display:flex; gap:8px; }
+  .status-input-row input { flex:1; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:16px; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); color:var(--text); outline:none; transition:border-color 0.15s; }
+  .status-input-row input:focus { border-color:var(--coral); }
+  .status-input-row button { padding:11px 16px; background:var(--coral); color:#1A0D1E; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap; }
+  .status-result { display:none; margin-top:1rem; padding:14px; border-radius:12px; text-align:center; }
+  .change-btn { margin-top:10px; padding:8px 18px; background:transparent; border:1.5px solid var(--border); border-radius:99px; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; cursor:pointer; transition:border-color 0.15s; }
+  .change-btn:hover { border-color:var(--coral); color:var(--coral); }
+
+  /* ADMIN */
+  .admin-login { margin-top:2rem; }
+  .admin-toggle { background:none; border:none; font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); cursor:pointer; text-decoration:underline; text-underline-offset:3px; display:block; margin:0 auto; padding:4px; }
+  .admin-panel { display:none; }
+  .admin-panel.open { display:block; }
+  .admin-form { display:flex; gap:8px; margin-top:0.75rem; }
+  .admin-form input { flex:1; padding:9px 12px; border:1.5px solid var(--border); border-radius:10px; font-family:'DM Sans',sans-serif; font-size:13px; background:var(--input-bg); color:var(--text); outline:none; }
+  .admin-form input:focus { border-color:var(--coral); }
+  .admin-form button { padding:9px 16px; background:var(--coral); color:#1A0D1E; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; cursor:pointer; }
+  .admin-err { font-size:12px; color:var(--coral); margin-top:6px; text-align:center; display:none; }
+  .admin-view { display:none; }
+  .admin-view.open { display:block; }
+  .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+  .admin-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--text); }
+  .logout-btn { background:none; border:1px solid var(--border); padding:5px 12px; border-radius:99px; font-size:12px; color:var(--muted); cursor:pointer; font-family:'DM Sans',sans-serif; }
+  .admin-filters { display:flex; gap:6px; margin-bottom:1rem; flex-wrap:wrap; }
+  .filter-btn { padding:5px 12px; border-radius:99px; border:1px solid var(--border); background:transparent; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+  .filter-btn.active { background:var(--coral); color:#1A0D1E; border-color:var(--coral); }
+  .pending-item { background:#1E1228; border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+  .pending-name { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .pending-meta { font-size:12px; color:var(--muted); margin-bottom:10px; }
+  .action-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .approve-btn { flex:1; padding:8px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; cursor:pointer; background:#0D2E22; color:#5CD4A0; }
+  .maybe-btn   { flex:1; padding:8px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; cursor:pointer; background:#2A2010; color:#D4A847; }
+  .decline-btn { flex:1; padding:8px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; cursor:pointer; background:#3A1810; color:#FF8C6B; }
+  .remove-btn  { flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; cursor:pointer; background:transparent; color:var(--muted); }
+  .no-pending { font-size:13px; color:var(--muted); text-align:center; padding:1rem 0; }
+  .loading-bar { text-align:center; padding:1.5rem; color:var(--muted); font-size:13px; }
+  .spinner { width:18px; height:18px; border:2px solid var(--border); border-top-color:var(--coral); border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; margin-right:8px; }
+
+  .footer { text-align:center; font-size:12px; color:var(--muted); margin-top:2.5rem; opacity:0.6; }
+
+  @keyframes popIn { from { transform:scale(0.92); opacity:0; } to { transform:scale(1); opacity:1; } }
+  @keyframes spin  { to { transform:rotate(360deg); } }
+
+  /* MOBILE */
+  @media (max-width:480px) {
+    .container { padding:1rem 1rem 3rem; }
+    .header { padding:2rem 0 1.5rem; }
+    .header .subhead { font-size:14px; max-width:100%; }
+    .field input, .field select, .admin-form input, .status-input-row input { font-size:16px; }
+    .rsvp-choice { padding:12px 6px; font-size:11px; }
+    .submit-btn { padding:15px; font-size:16px; }
+    .tab-btn { padding:11px 4px; font-size:12px; }
+    .approve-btn,.decline-btn,.maybe-btn,.remove-btn { padding:10px 4px; font-size:11px; }
+    .hero-bg { height:240px; }
+    .carousel-item { flex:0 0 calc(50% - 4px); }
+    .card { padding:1.25rem; }
+    .admin-form { flex-direction:column; }
+    .admin-form button { width:100%; padding:11px; }
+    .count-chip { font-size:10px; padding:8px 4px; }
+    .count-chip .n { font-size:16px; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- HEADER -->
   <div class="header">
     <div class="tag">You're invited 🕊️</div>
     <h1>Apartment 4I 🕊️<br><em>Memorial Service</em></h1>
     <p class="subhead">We done fucked Willoughby up with this one. BYOB, BYOW and bring a friend — we pouring one out for Apt 4I. Darty starts at 1pm and go till we lose our security deposit. We'll be up on the roof if the weather's nice or down in the game room. Hope to see y'all there!</p>
     <svg class="squiggle" viewBox="0 0 60 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 6 C8 2, 14 10, 20 6 S32 2, 38 6 S50 10, 58 6" stroke="#E8775A" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M2 6 C8 2, 14 10, 20 6 S32 2, 38 6 S50 10, 58 6" stroke="#FF8C6B" stroke-width="2" stroke-linecap="round" fill="none"/>
     </svg>
   </div>
 
-  <!-- HERO PHOTO -->
-  <div class="hero-bg">
-    <img src="IMG_5868.jpeg" alt="Apt 4I" />
+  <div class="hero-bg"><img src="IMG_5868.jpeg" alt="Apt 4I" /></div>
+
+  <!-- CAROUSEL -->
+  <div class="carousel-wrap" id="carousel-wrap">
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-item"><img src="IMG_5147.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_5844.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_4237.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_4238.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_4881.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_7032.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_7378.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_0941.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_1761.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_1604.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_2579.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_4433.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_4324.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_1402.jpeg" alt="" /></div>
+      <div class="carousel-item"><img src="IMG_7777.jpeg" alt="" /></div>
+    </div>
   </div>
 
-  <!-- GALLERY GRID -->
-  <div class="gallery-grid">
-    <div class="gallery-cell"><img src="IMG_5147.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_5844.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_4237.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_4238.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_4881.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_7032.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_7378.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_0941.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_1761.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_1604.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_2579.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_4433.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_4324.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_1402.jpeg" alt="" /></div>
-    <div class="gallery-cell"><img src="IMG_7777.jpeg" alt="" /></div>
-  </div>
-
-  <!-- DETAILS -->
   <div class="details">
-    <div class="detail-cell">
-      <span class="emoji">📅</span>
-      <div class="lbl">Date</div>
-      <div class="val">April 26</div>
-    </div>
-    <div class="detail-cell">
-      <span class="emoji">🕐</span>
-      <div class="lbl">Time</div>
-      <div class="val">1:00 PM</div>
-    </div>
-    <div class="detail-cell" style="grid-column: span 2;">
-      <span class="emoji">📍</span>
-      <div class="lbl">Location</div>
-      <div class="val">961 Willoughby Ave, Brooklyn, NY <span style="font-weight:300; font-size:12px;">(buzz 4I)</span></div>
-    </div>
-    <div class="detail-cell">
-      <span class="emoji">🥂</span>
-      <div class="lbl">Hosted by</div>
-      <div class="val">Jason, Herb & Orv</div>
-    </div>
-    <div class="detail-cell">
-      <span class="emoji">📞</span>
-      <div class="lbl">Questions?</div>
-      <div class="val" id="contact-num">—</div>
-    </div>
+    <div class="detail-cell"><span class="emoji">📅</span><div class="lbl">Date</div><div class="val">April 26</div></div>
+    <div class="detail-cell"><span class="emoji">🕐</span><div class="lbl">Time</div><div class="val">1:00 PM</div></div>
+    <div class="detail-cell" style="grid-column:span 2;"><span class="emoji">📍</span><div class="lbl">Location</div><div class="val">961 Willoughby Ave, Brooklyn, NY <span style="font-weight:300;font-size:12px;">(buzz 4I)</span></div></div>
+    <div class="detail-cell"><span class="emoji">🥂</span><div class="lbl">Hosted by</div><div class="val">Jason, Herb & Orv</div></div>
+    <div class="detail-cell"><span class="emoji">📞</span><div class="lbl">Questions?</div><div class="val" id="contact-num">—</div></div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('rsvp')">RSVP</button>
-    <button class="tab-btn" onclick="showTab('guests')">Guest list</button>
-    <button class="tab-btn" onclick="showTab('status')">My status</button>
+    <button class="tab-btn active" id="tab-btn-rsvp"   onclick="showTab('rsvp')">RSVP</button>
+    <button class="tab-btn"        id="tab-btn-guests" onclick="showTab('guests')">Guest list</button>
+    <button class="tab-btn"        id="tab-btn-status" onclick="showTab('status')">My status</button>
   </div>
 
   <!-- RSVP TAB -->
   <div id="tab-rsvp">
     <div class="card">
       <div class="card-title">Will you be joining us?</div>
-
       <div id="rsvp-form">
-        <div class="field">
-          <label>Your name</label>
-          <input type="text" id="f-name" placeholder="First and last name" />
-        </div>
+        <div class="field"><label>Your name</label><input type="text" id="f-name" placeholder="First and last name" /></div>
         <div class="field">
           <label>Are you coming?</label>
           <div class="rsvp-toggle">
-            <button class="rsvp-choice" id="btn-yes" onclick="selectRsvp('yes')">🎉 Yes, I'll be there!</button>
-            <button class="rsvp-choice" id="btn-no"  onclick="selectRsvp('no')">😢 Can't make it</button>
+            <button class="rsvp-choice" id="btn-yes"   onclick="selectRsvp('yes')">🎉 Yes!</button>
+            <button class="rsvp-choice" id="btn-maybe" onclick="selectRsvp('maybe')">🤔 Maybe</button>
+            <button class="rsvp-choice" id="btn-no"    onclick="selectRsvp('no')">😢 Can't</button>
           </div>
         </div>
         <div class="field" id="field-plus" style="display:none;">
@@ -613,29 +239,12 @@
             <option value="3">+3 guests</option>
           </select>
         </div>
-        <button class="submit-btn" onclick="submitRsvp()">Send my RSVP ✨</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitRsvp()">Send my RSVP ✨</button>
       </div>
-
       <div class="success-box" id="success-box">
         <div class="big-emoji" id="success-emoji">🎊</div>
         <h3 id="success-title">You're on the list!</h3>
         <p id="success-msg">We can't wait to celebrate with you. See you soon!</p>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:0;">
-      <div class="card-title">Check your status 🔍</div>
-      <p style="font-size:13px; color:var(--muted); margin-bottom:1rem; line-height:1.5;">Already RSVP'd? Enter your name to see if the hosts have confirmed you.</p>
-      <div style="display:flex; gap:8px;">
-        <input type="text" id="check-name" placeholder="Your name" onkeydown="if(event.key==='Enter') checkStatus()"
-          style="flex:1; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:16px; border:1.5px solid var(--border); border-radius:10px; background:var(--input-bg); color:var(--text); outline:none;" />
-        <button onclick="checkStatus()"
-          style="padding:11px 16px; background:var(--coral); color:#1A0D1E; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap;">Check</button>
-      </div>
-      <div id="status-result" style="display:none; margin-top:1rem; padding:14px; border-radius:12px; text-align:center;">
-        <div id="status-emoji" style="font-size:28px; margin-bottom:6px;"></div>
-        <div id="status-text" style="font-size:15px; font-weight:500;"></div>
-        <div id="status-sub" style="font-size:13px; margin-top:4px; opacity:0.8;"></div>
       </div>
     </div>
   </div>
@@ -644,15 +253,14 @@
   <div id="tab-guests" style="display:none;">
     <div class="card">
       <div class="card-title">Who's coming 🎈</div>
-      <div class="counts" id="counts">
-        <div class="count-chip chip-yes"><span class="n" id="cnt-yes">0</span>Coming</div>
-        <div class="count-chip chip-wait"><span class="n" id="cnt-wait">0</span>Pending</div>
-        <div class="count-chip chip-no"><span class="n" id="cnt-no">0</span>Decline</div>
+      <div class="counts">
+        <div class="count-chip chip-yes"><span class="n" id="cnt-yes">—</span>Coming</div>
+        <div class="count-chip chip-maybe"><span class="n" id="cnt-maybe">—</span>Maybe</div>
+        <div class="count-chip chip-wait"><span class="n" id="cnt-wait">—</span>Pending</div>
+        <div class="count-chip chip-no"><span class="n" id="cnt-no">—</span>Decline</div>
       </div>
-      <div id="guest-list-wrap"></div>
+      <div id="guest-list-wrap"><div class="loading-bar"><span class="spinner"></span>Loading…</div></div>
     </div>
-
-    <!-- Admin section -->
     <div class="admin-login">
       <button class="admin-toggle" onclick="toggleAdminLogin()">Hosts: manage RSVPs</button>
       <div class="admin-panel" id="admin-panel">
@@ -663,14 +271,38 @@
         <div class="admin-err" id="admin-err">Incorrect password</div>
       </div>
     </div>
-
     <div class="admin-view" id="admin-view">
       <div class="card" style="margin-top:1rem;">
         <div class="admin-header">
           <div class="admin-title">Host dashboard 🗝️</div>
           <button class="logout-btn" onclick="adminLogout()">Log out</button>
         </div>
+        <div class="admin-filters">
+          <button class="filter-btn active" onclick="setFilter('pending',this)">Pending</button>
+          <button class="filter-btn" onclick="setFilter('all',this)">All</button>
+          <button class="filter-btn" onclick="setFilter('confirmed',this)">Confirmed</button>
+          <button class="filter-btn" onclick="setFilter('maybe',this)">Maybe</button>
+          <button class="filter-btn" onclick="setFilter('rejected',this)">Declined</button>
+        </div>
         <div id="pending-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS TAB -->
+  <div id="tab-status" style="display:none;">
+    <div class="card">
+      <div class="card-title">Check your status 🔍</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.5;">Enter your name (or part of it) to see if you've been confirmed.</p>
+      <div class="status-input-row">
+        <input type="text" id="check-name" placeholder="Your name" onkeydown="if(event.key==='Enter') checkStatus()" />
+        <button onclick="checkStatus()">Check</button>
+      </div>
+      <div class="status-result" id="status-result">
+        <div id="status-emoji" style="font-size:28px;margin-bottom:6px;"></div>
+        <div id="status-text" style="font-size:15px;font-weight:500;"></div>
+        <div id="status-sub" style="font-size:13px;margin-top:4px;opacity:0.8;"></div>
+        <button class="change-btn" id="change-btn" style="display:none;" onclick="showTab('rsvp')">Change my RSVP</button>
       </div>
     </div>
   </div>
@@ -679,221 +311,298 @@
 </div>
 
 <script>
-  // ── PHONE NUMBER ──
+  // ── CONFIG ──
+  const HOST_PASSWORD = 'apt4eye';
+  const FORMSPREE_URL = 'https://formspree.io/f/xdapoend';
+
+  // ── JSONBin shared storage ──
+  // To enable shared RSVPs across all devices:
+  // 1) Go to jsonbin.io and create a free account
+  // 2) Create a new bin with content: []
+  // 3) Copy your Bin ID and Master API Key below
+  const JSONBIN_BIN_ID  = 'PASTE_BIN_ID_HERE';
+  const JSONBIN_API_KEY = 'PASTE_API_KEY_HERE';
+  const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+  const USE_JSONBIN     = JSONBIN_BIN_ID !== 'PASTE_BIN_ID_HERE';
+
+  async function fetchGuests() {
+    if (!USE_JSONBIN) return JSON.parse(localStorage.getItem('soiree_guests') || '[]');
+    try {
+      const r = await fetch(JSONBIN_URL + '/latest', { headers: { 'X-Master-Key': JSONBIN_API_KEY } });
+      const d = await r.json();
+      return Array.isArray(d.record) ? d.record : [];
+    } catch(e) {
+      return JSON.parse(localStorage.getItem('soiree_guests') || '[]');
+    }
+  }
+
+  async function saveGuests(guests) {
+    localStorage.setItem('soiree_guests', JSON.stringify(guests));
+    if (!USE_JSONBIN) return;
+    try {
+      await fetch(JSONBIN_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY },
+        body: JSON.stringify(guests)
+      });
+    } catch(e) {}
+  }
+
+  // ── PHONE ──
   const PHONES = ['(646) 403-2076', '(917) 327-5293', '(347) 781-3982'];
   document.getElementById('contact-num').textContent = PHONES[Math.floor(Math.random() * PHONES.length)];
 
-  // ── CONFIG ──
-  const HOST_PASSWORD = 'apt4eye';
-  // Formspree endpoint — replace XXXXXXXX with your form ID from formspree.io
-  const FORMSPREE_URL = 'https://formspree.io/f/xdapoend';
-
-  // ── BADGE FN ──
+  // ── HELPERS ──
   const BADGES = ['🌟','🎈','🥂','🌸','✨','🦋','🎀','🌙','🍾','🌺'];
-  function badge(name) { return BADGES[name.charCodeAt(0) % BADGES.length]; }
-
-  // ── EMOJI AVATARS ──
-  const AVATAR_COLORS = ['#C9B8D8','#B8D8C8','#F2C4B0','#FAD7A0','#AED6F1','#F9E0E0'];
-  function avatarColor(name) { return AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length]; }
-  function initials(name) { const p = name.trim().split(' '); return (p[0][0] + (p[1]?.[0] || '')).toUpperCase(); }
-
-  // ── STATE (localStorage) ──
-  function getGuests() { return JSON.parse(localStorage.getItem('soiree_guests') || '[]'); }
-  function saveGuests(g) { localStorage.setItem('soiree_guests', JSON.stringify(g)); }
+  const AVATAR_BG = ['#3D2850','#1A3528','#3A1810','#2A2010','#1A2A3A','#2A1A30'];
+  function badge(n)       { return BADGES[n.charCodeAt(0) % BADGES.length]; }
+  function avatarBg(n)    { return AVATAR_BG[n.charCodeAt(0) % AVATAR_BG.length]; }
+  function initials(n)    { const p=n.trim().split(' '); return (p[0][0]+(p[1]?.[0]||'')).toUpperCase(); }
+  function fuzzy(name,q)  {
+    const n=name.toLowerCase(), s=q.toLowerCase().trim();
+    if (!s) return false;
+    if (n.includes(s)) return true;
+    return s.split(' ').every(w => w && n.includes(w));
+  }
 
   // ── TABS ──
   function showTab(t) {
-    document.getElementById('tab-rsvp').style.display    = t === 'rsvp'    ? 'block' : 'none';
-    document.getElementById('tab-guests').style.display  = t === 'guests'  ? 'block' : 'none';
-    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0)===(t==='rsvp')));
-    if (t === 'guests') renderGuests();
+    ['rsvp','guests','status'].forEach(id => {
+      document.getElementById('tab-'+id).style.display = id===t ? 'block' : 'none';
+      document.getElementById('tab-btn-'+id).classList.toggle('active', id===t);
+    });
+    if (t==='guests') renderGuests();
   }
 
   // ── RSVP ──
   let rsvpChoice = null;
-
   function selectRsvp(v) {
     rsvpChoice = v;
-    document.getElementById('btn-yes').className = 'rsvp-choice' + (v==='yes' ? ' yes-active' : '');
-    document.getElementById('btn-no').className  = 'rsvp-choice' + (v==='no'  ? ' no-active'  : '');
-    document.getElementById('field-plus').style.display = v === 'yes' ? 'block' : 'none';
+    document.getElementById('btn-yes').className   = 'rsvp-choice'+(v==='yes'   ? ' yes-active'   : '');
+    document.getElementById('btn-maybe').className = 'rsvp-choice'+(v==='maybe' ? ' maybe-active' : '');
+    document.getElementById('btn-no').className    = 'rsvp-choice'+(v==='no'    ? ' no-active'    : '');
+    document.getElementById('field-plus').style.display = v==='yes' ? 'block' : 'none';
   }
 
   async function submitRsvp() {
     const name = document.getElementById('f-name').value.trim();
     if (!name) { document.getElementById('f-name').focus(); return; }
-    if (!rsvpChoice) { alert('Please select yes or no!'); return; }
-    const plus = parseInt(document.getElementById('f-plus').value || '0');
-    const total = rsvpChoice === 'yes' ? 1 + plus : 0;
+    if (!rsvpChoice) { alert('Please select yes, maybe, or no!'); return; }
+    const plus  = parseInt(document.getElementById('f-plus').value || '0');
+    const total = rsvpChoice==='yes' ? 1+plus : 1;
+    const btn   = document.getElementById('submit-btn');
+    btn.textContent='Sending…'; btn.disabled=true;
 
-    // Save locally
-    const guests = getGuests();
-    guests.push({ name, rsvp: rsvpChoice, plus, total, status: 'pending', ts: Date.now() });
-    saveGuests(guests);
+    const guests  = await fetchGuests();
+    const cleaned = guests.filter(g => g.name.toLowerCase() !== name.toLowerCase());
+    cleaned.push({ name, rsvp:rsvpChoice, plus, total, status:'pending', ts:Date.now() });
+    await saveGuests(cleaned);
 
-    // Send to Formspree (non-blocking — page works even without it)
     try {
       await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ name, rsvp: rsvpChoice, plus_ones: plus })
+        method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({ name, rsvp:rsvpChoice, plus_ones:plus })
       });
-    } catch(e) { /* silent fail — local save already happened */ }
+    } catch(e) {}
 
-    // Show success
-    document.getElementById('rsvp-form').style.display = 'none';
-    const box = document.getElementById('success-box');
-    box.style.display = 'block';
-    if (rsvpChoice === 'yes') {
-      document.getElementById('success-emoji').textContent = '🎊';
-      document.getElementById('success-title').textContent = "You're on the list!";
-      document.getElementById('success-msg').textContent = "We can't wait to celebrate with you. See you soon!";
-    } else {
-      document.getElementById('success-emoji').textContent = '💌';
-      document.getElementById('success-title').textContent = "We'll miss you!";
-      document.getElementById('success-msg').textContent = "Thanks for letting us know. We're sending you all the good vibes!";
-    }
+    document.getElementById('rsvp-form').style.display='none';
+    document.getElementById('success-box').style.display='block';
+    const msgs = {
+      yes:  { e:'🎊', t:"You're on the list!", m:"We can't wait to celebrate with you. See you April 26th!" },
+      maybe:{ e:'🤔', t:"Got it — you're a maybe!", m:"Check back or update your RSVP once you know for sure." },
+      no:   { e:'💌', t:"We'll miss you!", m:"Thanks for letting us know. Sending you all the good vibes!" }
+    };
+    const m = msgs[rsvpChoice];
+    document.getElementById('success-emoji').textContent = m.e;
+    document.getElementById('success-title').textContent = m.t;
+    document.getElementById('success-msg').textContent   = m.m;
   }
 
   // ── STATUS CHECK ──
-  function checkStatus() {
-    const input = document.getElementById('check-name').value.trim().toLowerCase();
+  async function checkStatus() {
+    const input  = document.getElementById('check-name').value.trim();
     if (!input) return;
-    const guests = getGuests();
-    const match = guests.find(g => g.name.toLowerCase() === input);
+    const guests = await fetchGuests();
+    const match  = guests.find(g => fuzzy(g.name, input));
     const result = document.getElementById('status-result');
-    const emoji  = document.getElementById('status-emoji');
-    const text   = document.getElementById('status-text');
-    const sub    = document.getElementById('status-sub');
-    result.style.display = 'block';
+    const eEl=document.getElementById('status-emoji'), tEl=document.getElementById('status-text'), sEl=document.getElementById('status-sub'), cBtn=document.getElementById('change-btn');
+    result.style.display='block'; cBtn.style.display='none';
 
     if (!match) {
-      result.style.background = '#2A1A10';
-      result.style.border = '1px solid #4A2A10';
-      emoji.textContent = '🤔';
-      text.style.color = '#FF8C6B';
-      text.textContent = "We don't see you yet!";
-      sub.textContent = "Make sure your name matches exactly, or go ahead and RSVP above.";
-    } else if (match.status === 'pending') {
-      result.style.background = '#2A2010';
-      result.style.border = '1px solid #4A3510';
-      emoji.textContent = '⏳';
-      text.style.color = '#D4A847';
-      text.textContent = "Your RSVP is pending!";
-      sub.textContent = "The hosts haven't confirmed you yet — check back soon.";
-    } else if (match.status === 'confirmed' && match.rsvp === 'yes') {
-      result.style.background = '#0D2E22';
-      result.style.border = '1px solid #1D6040';
-      emoji.textContent = '🎉';
-      text.style.color = '#5CD4A0';
-      text.textContent = "You're confirmed!";
-      sub.textContent = `See you April 26th — party of ${match.total}. Don't be late!`;
-    } else if (match.status === 'confirmed' && match.rsvp === 'no') {
-      result.style.background = '#2A1810';
-      result.style.border = '1px solid #4A2810';
-      emoji.textContent = '💌';
-      text.style.color = '#FF8C6B';
-      text.textContent = "Noted — you're not coming.";
-      sub.textContent = "We'll miss you! Change your mind? RSVP again above.";
+      result.style.cssText='display:block;margin-top:1rem;padding:14px;border-radius:12px;text-align:center;background:#2A1A10;border:1px solid #4A2A10;';
+      eEl.textContent='🤔'; tEl.style.color='#FF8C6B';
+      tEl.textContent="We don't see you yet!";
+      sEl.textContent="Try a different spelling or part of your name, or go RSVP above.";
+    } else if (match.status==='pending') {
+      result.style.cssText='display:block;margin-top:1rem;padding:14px;border-radius:12px;text-align:center;background:#1A1030;border:1px solid #3A2050;';
+      eEl.textContent='⏳'; tEl.style.color='#A88FBB';
+      tEl.textContent=`Hey ${match.name.split(' ')[0]}! Your RSVP is pending.`;
+      sEl.textContent="The hosts haven't confirmed you yet — check back soon.";
+      cBtn.style.display='inline-block';
+    } else if (match.status==='confirmed' && match.rsvp==='yes') {
+      result.style.cssText='display:block;margin-top:1rem;padding:14px;border-radius:12px;text-align:center;background:#0D2E22;border:1px solid #1D6040;';
+      eEl.textContent='🎉'; tEl.style.color='#5CD4A0';
+      tEl.textContent=`${match.name.split(' ')[0]}, you're confirmed!`;
+      sEl.textContent=`See you April 26th — party of ${match.total}. Don't be late!`;
+      cBtn.style.display='inline-block';
+    } else if (match.status==='confirmed' && match.rsvp==='maybe') {
+      result.style.cssText='display:block;margin-top:1rem;padding:14px;border-radius:12px;text-align:center;background:#2A2010;border:1px solid #4A3510;';
+      eEl.textContent='🤔'; tEl.style.color='#D4A847';
+      tEl.textContent=`${match.name.split(' ')[0]}, you're down as a maybe.`;
+      sEl.textContent="Locked in yet? Update your RSVP!";
+      cBtn.style.display='inline-block';
+    } else if (match.status==='confirmed' && match.rsvp==='no') {
+      result.style.cssText='display:block;margin-top:1rem;padding:14px;border-radius:12px;text-align:center;background:#2A1810;border:1px solid #4A2810;';
+      eEl.textContent='💌'; tEl.style.color='#FF8C6B';
+      tEl.textContent="Noted — you're not coming.";
+      sEl.textContent="Changed your mind? Hit the button below.";
+      cBtn.style.display='inline-block';
     }
   }
 
   // ── GUEST LIST ──
-  function renderGuests() {
-    const guests = getGuests();
-    const confirmed = guests.filter(g => g.status === 'confirmed' && g.rsvp === 'yes');
-    const declined  = guests.filter(g => g.status === 'confirmed' && g.rsvp === 'no');
-    const pending   = guests.filter(g => g.status === 'pending');
+  async function renderGuests() {
+    document.getElementById('guest-list-wrap').innerHTML='<div class="loading-bar"><span class="spinner"></span>Loading…</div>';
+    const guests   = await fetchGuests();
+    const confirmed = guests.filter(g=>g.status==='confirmed'&&g.rsvp==='yes');
+    const maybes    = guests.filter(g=>g.status==='confirmed'&&g.rsvp==='maybe');
+    const declined  = guests.filter(g=>g.status==='confirmed'&&g.rsvp==='no');
+    const pending   = guests.filter(g=>g.status==='pending');
 
-    document.getElementById('cnt-yes').textContent  = confirmed.reduce((s,g) => s + g.total, 0);
-    document.getElementById('cnt-no').textContent   = declined.length;
-    document.getElementById('cnt-wait').textContent = pending.length;
+    document.getElementById('cnt-yes').textContent   = confirmed.reduce((s,g)=>s+g.total,0);
+    document.getElementById('cnt-maybe').textContent = maybes.length;
+    document.getElementById('cnt-no').textContent    = declined.length;
+    document.getElementById('cnt-wait').textContent  = pending.length;
 
+    const visible = [...confirmed, ...maybes];
     const wrap = document.getElementById('guest-list-wrap');
-    const visible = confirmed;
-
     if (!visible.length) {
-      wrap.innerHTML = '<div class="empty-state"><div class="e">🎈</div>No confirmed guests yet — be the first!</div>';
+      wrap.innerHTML='<div class="empty-state"><div class="e">🎈</div>No confirmed guests yet — be the first!</div>';
       return;
     }
-
-    wrap.innerHTML = visible.map(g => `
+    wrap.innerHTML = visible.map(g=>`
       <div class="guest-item">
-        <div class="guest-avatar" style="background:${avatarColor(g.name)}">${initials(g.name)}</div>
+        <div class="guest-avatar" style="background:${avatarBg(g.name)}">${initials(g.name)}</div>
         <div class="guest-info">
           <div class="guest-name">${g.name} ${badge(g.name)}</div>
-          <div class="guest-meta">${g.total > 1 ? `party of ${g.total}` : 'flying solo'}</div>
+          <div class="guest-meta">${g.rsvp==='yes'?(g.total>1?`party of ${g.total}`:'flying solo'):'maybe coming'}</div>
         </div>
-        <span class="status-badge badge-confirmed">Coming 🎉</span>
-      </div>
-    `).join('');
+        <span class="status-badge ${g.rsvp==='yes'?'badge-confirmed':'badge-maybe'}">${g.rsvp==='yes'?'Coming 🎉':'Maybe 🤔'}</span>
+      </div>`).join('');
   }
 
   // ── ADMIN ──
-  let adminOpen = false;
+  let adminOpen=false, adminFilter='pending';
 
   function toggleAdminLogin() {
-    const panel = document.getElementById('admin-panel');
-    adminOpen = !adminOpen;
-    panel.classList.toggle('open', adminOpen);
+    adminOpen=!adminOpen;
+    document.getElementById('admin-panel').classList.toggle('open',adminOpen);
   }
-
   function adminLogin() {
-    const pw = document.getElementById('admin-pw').value;
-    const err = document.getElementById('admin-err');
-    if (pw === HOST_PASSWORD) {
+    if (document.getElementById('admin-pw').value===HOST_PASSWORD) {
       document.getElementById('admin-panel').classList.remove('open');
       document.getElementById('admin-view').classList.add('open');
-      err.style.display = 'none';
+      document.getElementById('admin-err').style.display='none';
       renderAdminPanel();
-    } else {
-      err.style.display = 'block';
-    }
+    } else { document.getElementById('admin-err').style.display='block'; }
   }
-
   function adminLogout() {
     document.getElementById('admin-view').classList.remove('open');
-    document.getElementById('admin-pw').value = '';
+    document.getElementById('admin-pw').value='';
+  }
+  function setFilter(f,btn) {
+    adminFilter=f;
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderAdminPanel();
   }
 
-  function renderAdminPanel() {
-    const guests = getGuests();
-    const pending = guests.filter(g => g.status === 'pending');
-    const wrap = document.getElementById('pending-list');
+  async function renderAdminPanel() {
+    const wrap=document.getElementById('pending-list');
+    wrap.innerHTML='<div class="loading-bar"><span class="spinner"></span>Loading…</div>';
+    const guests=await fetchGuests();
+    let list;
+    if      (adminFilter==='pending')   list=guests.filter(g=>g.status==='pending');
+    else if (adminFilter==='all')       list=guests;
+    else if (adminFilter==='confirmed') list=guests.filter(g=>g.status==='confirmed'&&g.rsvp==='yes');
+    else if (adminFilter==='maybe')     list=guests.filter(g=>g.rsvp==='maybe');
+    else if (adminFilter==='rejected')  list=guests.filter(g=>g.status==='confirmed'&&g.rsvp==='no');
+    else list=[];
 
-    if (!pending.length) {
-      wrap.innerHTML = '<div class="no-pending">🎉 No pending RSVPs — all caught up!</div>';
-      return;
-    }
+    if (!list.length) { wrap.innerHTML='<div class="no-pending">🎉 No entries here.</div>'; return; }
 
-    wrap.innerHTML = pending.map((g, _) => {
-      const idx = guests.findIndex(x => x.ts === g.ts);
-      const plusLabel = g.rsvp === 'yes' ? (g.plus > 0 ? `+${g.plus} guest${g.plus > 1 ? 's' : ''}` : 'just them') : 'declining';
-      return `
-        <div class="pending-item" id="pend-${g.ts}">
-          <div class="pending-name">${g.name} — ${g.rsvp === 'yes' ? '🎉 Coming' : '😢 Declining'}</div>
-          <div class="pending-meta">${plusLabel}</div>
-          <div class="action-btns">
-            <button class="approve-btn" onclick="resolveRsvp(${g.ts}, 'confirmed')">✓ Confirm</button>
-            <button class="decline-btn" onclick="resolveRsvp(${g.ts}, 'rejected')">✕ Remove</button>
-          </div>
-        </div>`;
+    wrap.innerHTML=list.map(g=>{
+      const plusLabel=g.rsvp==='yes'?(g.plus>0?`+${g.plus} guest${g.plus>1?'s':''}`:'just them'):g.rsvp;
+      const statusTag=g.status==='confirmed'?`✓ ${g.rsvp}`:g.status==='rejected'?'✕ removed':'⏳ pending';
+      return `<div class="pending-item" id="pend-${g.ts}">
+        <div class="pending-name">${g.name} — ${g.rsvp==='yes'?'🎉':g.rsvp==='maybe'?'🤔':'😢'} ${g.rsvp}</div>
+        <div class="pending-meta">${plusLabel} · ${statusTag}</div>
+        <div class="action-btns">
+          <button class="approve-btn" onclick="resolveRsvp(${g.ts},'confirmed')">✓ Confirm</button>
+          <button class="maybe-btn"   onclick="resolveRsvp(${g.ts},'maybe-ok')">~ Maybe</button>
+          <button class="decline-btn" onclick="resolveRsvp(${g.ts},'rejected')">✕ Decline</button>
+          <button class="remove-btn"  onclick="resolveRsvp(${g.ts},'remove')">🗑 Remove</button>
+        </div>
+      </div>`;
     }).join('');
   }
 
-  function resolveRsvp(ts, action) {
-    const guests = getGuests();
-    const idx = guests.findIndex(g => g.ts === ts);
-    if (idx === -1) return;
-    if (action === 'confirmed') {
-      guests[idx].status = 'confirmed';
-    } else {
-      guests.splice(idx, 1);
-    }
-    saveGuests(guests);
+  async function resolveRsvp(ts,action) {
+    const guests=await fetchGuests();
+    const idx=guests.findIndex(g=>g.ts===ts);
+    if (idx===-1) return;
+    if      (action==='remove')     guests.splice(idx,1);
+    else if (action==='confirmed')  { guests[idx].status='confirmed'; }
+    else if (action==='maybe-ok')   { guests[idx].status='confirmed'; guests[idx].rsvp='maybe'; }
+    else if (action==='rejected')   { guests[idx].status='confirmed'; guests[idx].rsvp='no'; }
+    await saveGuests(guests);
     renderAdminPanel();
     renderGuests();
   }
+
+  // ── CAROUSEL ──
+  (function(){
+    const track=document.getElementById('carousel-track');
+    const wrap=document.getElementById('carousel-wrap');
+    const origItems=Array.from(track.children);
+    // triple-clone for seamless loop
+    origItems.forEach(i=>track.appendChild(i.cloneNode(true)));
+    origItems.forEach(i=>track.appendChild(i.cloneNode(true)));
+
+    const gap=8;
+    function itemW() { return track.children[0].offsetWidth+gap; }
+    let offset=0, isDragging=false, startX=0, startOff=0, autoTimer=null;
+
+    function tick() {
+      offset+=0.4;
+      const loop=itemW()*origItems.length;
+      if (offset>=loop) offset-=loop;
+      track.style.transition='none';
+      track.style.transform=`translateX(${-offset}px)`;
+    }
+    function startAuto() { if (!autoTimer) autoTimer=setInterval(tick,16); }
+    function stopAuto()  { clearInterval(autoTimer); autoTimer=null; }
+
+    startAuto();
+
+    function onStart(x) { isDragging=true; startX=x; startOff=offset; stopAuto(); track.style.transition='none'; }
+    function onMove(x) {
+      if (!isDragging) return;
+      offset=startOff+(startX-x);
+      const loop=itemW()*origItems.length;
+      if (offset<0) offset+=loop;
+      if (offset>=loop) offset-=loop;
+      track.style.transform=`translateX(${-offset}px)`;
+    }
+    function onEnd() { if (!isDragging) return; isDragging=false; startAuto(); }
+
+    wrap.addEventListener('mousedown', e=>{ e.preventDefault(); onStart(e.clientX); });
+    window.addEventListener('mousemove', e=>onMove(e.clientX));
+    window.addEventListener('mouseup', onEnd);
+    wrap.addEventListener('touchstart', e=>onStart(e.touches[0].clientX),{passive:true});
+    wrap.addEventListener('touchmove',  e=>onMove(e.touches[0].clientX), {passive:true});
+    wrap.addEventListener('touchend',   onEnd);
+  })();
 </script>
 </body>
 </html>
