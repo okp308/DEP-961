@@ -325,8 +325,8 @@
   //    CREATE POLICY "public read"  ON rsvps FOR SELECT USING (true);
   //    CREATE POLICY "public write" ON rsvps FOR UPDATE USING (true);
   // 3) Go to Project Settings → API → paste URL and anon key below
-  const SB_URL     = 'PASTE_SUPABASE_URL_HERE';   // e.g. https://xxxx.supabase.co
-  const SB_KEY     = 'PASTE_SUPABASE_ANON_KEY_HERE';
+  const SB_URL     = 'https://ghgkihcadteazgskkgzx.supabase.co';   // e.g. https://xxxx.supabase.co
+  const SB_KEY     = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoZ2tpaGNhZHRlYXpnc2trZ3p4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzY0NjAsImV4cCI6MjA5MDExMjQ2MH0.8nK389RneNZk3c6f--6r9rFplAuzzn1fnb2JCRgl7Ig';
   const USE_SB     = SB_URL !== 'PASTE_SUPABASE_URL_HERE';
 
   async function fetchGuests() {
