@@ -171,8 +171,8 @@
 <div class="container">
 
   <div class="header">
-    <div class="tag">You're invited 🕊️</div>
-    <h1>Apartment 4I 🕊️<br><em>Memorial Service</em></h1>
+    <div class="tag">You're invited</div>
+    <h1>Apartment 4I<br><em>Memorial Service</em></h1>
     <p class="subhead">We done fucked Willoughby up with this one. BYOB, BYOW and bring a friend — we pouring one out for Apt 4I. Darty starts at 1pm and go till we lose our security deposit. We'll be up on the roof if the weather's nice or down in the game room. Hope to see y'all there!</p>
     <svg class="squiggle" viewBox="0 0 60 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M2 6 C8 2, 14 10, 20 6 S32 2, 38 6 S50 10, 58 6" stroke="#FF8C6B" stroke-width="2" stroke-linecap="round" fill="none"/>
@@ -307,7 +307,7 @@
     </div>
   </div>
 
-  <div class="footer">Rest in peace, Apt 4I 🕊️ — what a run it was</div>
+
 </div>
 
 <script>
@@ -315,29 +315,29 @@
   const HOST_PASSWORD = 'apt4eye';
   const FORMSPREE_URL = 'https://formspree.io/f/xdapoend';
 
-  // ── JSONBin shared storage ──
-  // To enable shared RSVPs across all devices:
-  // 1) Go to jsonbin.io and create a free account
-  // 2) Create a new bin with content: []
-  // 3) Copy your Bin ID and Master API Key below
-  const JSONBIN_BIN_ID  = '69c4872daa77b81da91d7757';
-  const JSONBIN_API_KEY = '$2a$10$7u17iP90VXEIccFbH4RiAe0KjekzGvts6mPUs54CuywnI7yxhd93a';
-  const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
-  const USE_JSONBIN     = JSONBIN_BIN_ID !== 'PASTE_BIN_ID_HERE';
+  // ── Supabase shared storage ──
+  // Setup (free, 2 min):
+  // 1) Go to supabase.com → New project
+  // 2) In SQL Editor run:
+  //    CREATE TABLE rsvps (id serial primary key, data jsonb not null default '[]'::jsonb);
+  //    INSERT INTO rsvps (data) VALUES ('[]');
+  //    ALTER TABLE rsvps ENABLE ROW LEVEL SECURITY;
+  //    CREATE POLICY "public read"  ON rsvps FOR SELECT USING (true);
+  //    CREATE POLICY "public write" ON rsvps FOR UPDATE USING (true);
+  // 3) Go to Project Settings → API → paste URL and anon key below
+  const SB_URL     = 'PASTE_SUPABASE_URL_HERE';   // e.g. https://xxxx.supabase.co
+  const SB_KEY     = 'PASTE_SUPABASE_ANON_KEY_HERE';
+  const USE_SB     = SB_URL !== 'PASTE_SUPABASE_URL_HERE';
 
   async function fetchGuests() {
-    if (!USE_JSONBIN) return JSON.parse(localStorage.getItem('soiree_guests') || '[]');
+    if (!USE_SB) return JSON.parse(localStorage.getItem('soiree_guests') || '[]');
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5000);
-      const r = await fetch(JSONBIN_URL + '/latest', {
-        headers: { 'X-Master-Key': JSONBIN_API_KEY },
-        signal: controller.signal
+      const r = await fetch(`${SB_URL}/rest/v1/rsvps?select=data&limit=1`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
       });
-      clearTimeout(timeout);
       if (!r.ok) throw new Error('fetch failed');
-      const d = await r.json();
-      const data = Array.isArray(d.record) ? d.record : [];
+      const rows = await r.json();
+      const data = rows[0]?.data || [];
       localStorage.setItem('soiree_guests', JSON.stringify(data));
       return data;
     } catch(e) {
@@ -347,17 +347,18 @@
 
   async function saveGuests(guests) {
     localStorage.setItem('soiree_guests', JSON.stringify(guests));
-    if (!USE_JSONBIN) return true;
+    if (!USE_SB) return true;
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5000);
-      const r = await fetch(JSONBIN_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY },
-        body: JSON.stringify(guests),
-        signal: controller.signal
+      const r = await fetch(`${SB_URL}/rest/v1/rsvps?id=eq.1`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ data: guests })
       });
-      clearTimeout(timeout);
       return r.ok;
     } catch(e) {
       return false;
@@ -429,7 +430,7 @@
     document.getElementById('rsvp-form').style.display='none';
     document.getElementById('success-box').style.display='block';
     const msgs = {
-      yes:  { e:'🎊', t:"You're on the list!", m:"We can't wait to celebrate with you. See you April 26th!" },
+      yes:  { e:'🎊', t:"You're on the list!", m:"" },
       maybe:{ e:'🤔', t:"Got it — you're a maybe!", m:"Check back or update your RSVP once you know for sure." },
       no:   { e:'💌', t:"We'll miss you!", m:"Thanks for letting us know. Sending you all the good vibes!" }
     };
